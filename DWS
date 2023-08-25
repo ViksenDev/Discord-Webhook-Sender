@@ -8,7 +8,7 @@ async def send () :
     Message = input('Введите ваше сообщение: ')
 
     async with aiohttp.ClientSession() as session:
-        webhook = Webhook.from_url(URL, adapter=AsyncWebhookAdapter(session))
+        webhook = Webhook.from_url(URL, session=session)
         await webhook.send(Message)
 
 
