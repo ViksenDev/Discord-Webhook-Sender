@@ -2,50 +2,52 @@ from tkinter import *
 from tkinter import ttk
 import requests
 from discord import SyncWebhook # Import SyncWebhook
- 
+import customtkinter
+
+customtkinter.set_appearance_mode("System")  # Modes: "System" (standard), "Dark", "Light"
+customtkinter.set_default_color_theme("dark-blue")  # Themes: "blue" (standard), "green", "dark-blue"
+
 def show_message():
-   u = url.get()
-   m = message.get()
+   u = entry_1.get()
+   m = entry_2.get()
    webhook = SyncWebhook.from_url(u) # Initializing webhook
    webhook.send(content=m) # Executing webhook.
-   message_label["text"] = "Выполнено"
-
+   label_3 = customtkinter.CTkLabel(master=frame_1, text="Отправлено успешно", justify=customtkinter.LEFT)
+   label_3.pack(pady=10, padx=0)
  
-root = Tk()
-root.title("Discord Webhook Sender")
-root.geometry("350x300") 
-root['background']='#ADD8E6'
+app = customtkinter.CTk()
+app.geometry("350x380")
+app.title("Discord Webhook Sender")
+
+frame_1 = customtkinter.CTkFrame(master=app)
+frame_1.pack(pady=2, padx=2, fill="both", expand=True)
+
+label_1 = customtkinter.CTkLabel(master=frame_1, text="Введите URL вашего вебхука:", justify=customtkinter.LEFT)
+label_1.pack(pady=10, padx=0)
+
+entry_1 = customtkinter.CTkEntry(master=frame_1, placeholder_text="Webhook")
+entry_1.pack(pady=10, padx=0)
+
+label_2 = customtkinter.CTkLabel(master=frame_1, text="Введите ваше сообщение:", justify=customtkinter.LEFT)
+label_2.pack(pady=10, padx=0)
+
+entry_2 = customtkinter.CTkEntry(master=frame_1, placeholder_text="Message")
+entry_2.pack(pady=10, padx=0)
+
+button_1 = customtkinter.CTkButton(master=frame_1, text="Отправить", command=show_message)
+button_1.pack(pady=10, padx=0)
+
+button_2 = customtkinter.CTkButton(master=frame_1, text="Выход", command=app.destroy)
+button_2.pack(pady=10, padx=0)
 
 
 
-label = ttk.Label(text="Введите URL вашего вебхука:")
-label.pack(anchor=NW, padx=6, pady=6)
-
-url = ttk.Entry(width=60, font=('helvetica  16'))
-url.pack(anchor=NW, padx=6, pady=6,)
-url.focus()
-
-label2 = ttk.Label(text="Введите ваше сообщение:")
-label2.pack(anchor=NW, padx=6, pady=6)
-
-message = ttk.Entry(width=60, font=('helvetica  16'))
-message.pack(anchor=NW, padx=6, pady=6)
-  
-btn = ttk.Button(text="Отправить", command=show_message)
-btn.pack(anchor=NW, padx=6, pady=6)
-
-# Button for closing
-exit_button = ttk.Button(text="Выход", command=root.destroy)
-exit_button.pack(anchor=NW, padx=6, pady=6)
- 
-ttk.Style().configure(".",  font="helvetica  16", weight="bold", foreground="#000000", padding=8, background="#ADD8E6") 
 
 
 
-message_label = ttk.Label(foreground="green")
-message_label.pack(anchor=NW, padx=6, pady=6)
+
 
 
 
   
-root.mainloop()
+app.mainloop()
